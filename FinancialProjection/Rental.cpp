@@ -77,9 +77,9 @@ RentalPropertyRecord RentalProperty::Generate( const Date& a_Date, const Date& a
 	if ( Record.Current_HouseAcquired )
 	{
 		const auto Iter = std::ranges::find_if( Constant_LeasePeriods, [ a_Date ]( const RentalLeasePeriod& a_LeasePeriod )
-			{
-				return a_Date >= a_LeasePeriod.From && a_Date <= a_LeasePeriod.To;
-			} );
+		{
+			return a_Date >= a_LeasePeriod.From && a_Date <= a_LeasePeriod.To;
+		} );
 
 		// If we are within a lease period, we can set info.
 		if ( Iter != Constant_LeasePeriods.end() )

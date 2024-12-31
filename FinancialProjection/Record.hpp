@@ -2,6 +2,49 @@
 
 #include "Date.hpp"
 
+template < typename _Data >
+struct Interval
+{
+	using DataType = _Data;
+
+	Date From, To;
+	DataType Data;
+};
+
+template < typename _Data >
+class IntervalList
+{
+public:
+
+	using DataType = _Data;
+	using IntervalType = Interval< DataType >;
+
+	std::vector< IntervalType > Intervals;
+
+	IntervalType* GetInterval( const Date& a_Date )
+	{
+		for ( auto& Interval : Intervals )
+		{
+			if ( a_Date >= Interval.From && a_Date <= Interval.To )
+			{
+				return &Interval;
+			}
+		}
+
+		return nullptr;
+	}
+
+	void AddInterval( const Date& a_From, const Date& a_To, const DataType& a_Data )
+	{
+		Intervals.push_back( IntervalType{ a_From, a_To, a_Data } );
+	}
+
+	void AddInterval( const Date& a_When, const DataType& a_Data )
+	{
+		Intervals.push_back( IntervalType{ a_When, a_When, a_Data } );
+	}
+};
+
 struct RecordBase
 {
 	Date When;

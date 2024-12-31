@@ -2,7 +2,7 @@
 #include <vector>
 #include <map>
 
-#include "FinancialRecord.hpp"
+#include "Record.hpp"
 
 class Job;
 class RentalProperty;

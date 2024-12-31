@@ -2,7 +2,7 @@
 #include <map>
 
 #include "Date.hpp"
-#include "FinancialRecord.hpp"
+#include "Record.hpp"
 
 class BankLoanAccount;
 
@@ -60,9 +60,9 @@ public:
 	double Constant_HouseCost;
 	double Constant_ExpectedAnnualIncrease;
 	double Constant_ManagementFee;
-	std::vector< RentalLeasePeriod > Constant_LeasePeriods;
-	std::vector< RentalCost > Constant_RentalCosts;
-	std::vector< RentalEquityWithdrawal > Constant_EquityWithdrawals;
+	IntervalList< RentalLeasePeriod > Constant_LeasePeriods;
+	IntervalList< RentalCost > Constant_RentalCosts;
+	IntervalList< RentalEquityWithdrawal > Constant_EquityWithdrawals;
 	std::shared_ptr< BankLoanAccount > Constant_LandLoan;
 	std::shared_ptr< BankLoanAccount > Constant_HouseLoan;
 	std::map< int32_t, double > Constant_DepreciationSchedule;

@@ -53,7 +53,7 @@
     <ClInclude Include="Tax.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="FinancialRecord.hpp">
+    <ClInclude Include="Record.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Cost.hpp">

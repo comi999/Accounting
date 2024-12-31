@@ -4,7 +4,7 @@
 #include <map>
 
 #include "Date.hpp"
-#include "FinancialRecord.hpp"
+#include "Record.hpp"
 
 class BankAccount;
 class Job;

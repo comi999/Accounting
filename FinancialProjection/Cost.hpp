@@ -1,5 +1,5 @@
 #pragma once
-#include "FinancialRecord.hpp"
+#include "Record.hpp"
 
 struct CostRecord : RecordBase
 {

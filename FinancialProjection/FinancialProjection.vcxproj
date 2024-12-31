@@ -139,7 +139,7 @@
     <ClInclude Include="Bank.hpp" />
     <ClInclude Include="Cost.hpp" />
     <ClInclude Include="Date.hpp" />
-    <ClInclude Include="FinancialRecord.hpp" />
+    <ClInclude Include="Record.hpp" />
     <ClInclude Include="Job.hpp" />
     <ClInclude Include="Rental.hpp" />
     <ClInclude Include="Tax.hpp" />
