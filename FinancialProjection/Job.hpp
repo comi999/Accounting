@@ -2,7 +2,7 @@
 #include <memory>
 
 #include "Date.hpp"
-#include "FinancialRecord.hpp"
+#include "Record.hpp"
 
 struct JobRecord : RecordBase
 {

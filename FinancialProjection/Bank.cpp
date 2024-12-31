@@ -12,6 +12,12 @@ BankLoanAccountRecord BankLoanAccount::Generate( const Date& a_Date, const Date&
 	const Date PreviousDay = Dates::IncrementDays( a_Date, -1 );
 	const double Offset = Constant_OffsetAccount ? ( *Constant_OffsetAccount )[ PreviousDay ].Current_Balance : 0.0;
 
+	// Find if we have release a home loan amount this period.
+	if ( const auto BankLoanRelease = Constant_BankLoanReleases.GetInterval( a_Date, Dates::IncrementDays( a_Last, 1 ) ) )
+	{
+
+	}
+
 	const double OffsetLoan = Total_Loan > Offset ? Total_Loan - Offset : 0.0;
 	const double InterestPaid = OffsetLoan * Constant_InterestRate / 12.0;
 	const double PrincipalPaid = Constant_MinRepayment - InterestPaid;

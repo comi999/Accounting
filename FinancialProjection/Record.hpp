@@ -2,46 +2,106 @@
 
 #include "Date.hpp"
 
-template < typename _Data >
-struct Interval
-{
-	using DataType = _Data;
+//template < typename _Data >
+//struct Interval
+//{
+//	using DataType = _Data;
+//
+//	Date From, To;
+//	DataType Data;
+//};
+//
+//template < typename _Data >
+//class IntervalList
+//{
+//public:
+//
+//	using DataType = _Data;
+//	using IntervalType = Interval< DataType >;
+//
+//	std::vector< IntervalType > Intervals;
+//
+//	IntervalList() = default;
+//	IntervalList( const IntervalList& ) = default;
+//	IntervalList( IntervalList&& ) noexcept = default;
+//	IntervalList& operator=( const IntervalList& ) = default;
+//	IntervalList& operator=( IntervalList&& ) noexcept = default;
+//
+//	IntervalList( std::initializer_list< IntervalType > a_InitialiserList )
+//		: Intervals( a_InitialiserList )
+//	{}
+//
+//	IntervalType* GetInterval( const Date& a_Date )
+//	{
+//		for ( auto& Interval : Intervals )
+//		{
+//			if ( a_Date >= Interval.From && a_Date <= Interval.To )
+//			{
+//				return &Interval;
+//			}
+//		}
+//
+//		return nullptr;
+//	}
+//
+//	IntervalType* GetInterval( const Date& a_From, const Date& a_To )
+//	{
+//		for ( auto& Interval : Intervals )
+//		{
+//			if ( a_From <= Interval.From && a_To >= Interval.To )
+//			{
+//				return &Interval;
+//			}
+//		}
+//
+//		return nullptr;
+//	}
+//
+//	void AddInterval( const Date& a_From, const Date& a_To, const DataType& a_Data )
+//	{
+//		Intervals.push_back( IntervalType{ a_From, a_To, a_Data } );
+//	}
+//
+//	void AddInterval( const Date& a_When, const DataType& a_Data )
+//	{
+//		Intervals.push_back( IntervalType{ a_When, a_When, a_Data } );
+//	}
+//};
 
-	Date From, To;
-	DataType Data;
+template < typename _Event >
+struct EventListInterval
+{
+	_Event Event;
+	double NormalizedBegin;
+	double NormalizedLength;
 };
 
-template < typename _Data >
-class IntervalList
+template < typename _Event >
+class EventList
 {
 public:
 
-	using DataType = _Data;
-	using IntervalType = Interval< DataType >;
+	using EventType = _Event;
+	using ContainerType = std::vector< EventType >;
 
-	std::vector< IntervalType > Intervals;
+	ContainerType Events;
 
-	IntervalType* GetInterval( const Date& a_Date )
+	using IntervalType = EventListInterval< EventType >;
+	using IntervalResult = std::vector< IntervalType >;
+
+	ContainerType Range( const Date& a_From, const Date& a_To )
 	{
-		for ( auto& Interval : Intervals )
+		ContainerType Result;
+
+		for ( auto& Event : Events )
 		{
-			if ( a_Date >= Interval.From && a_Date <= Interval.To )
+			if ( Event.When >= a_From && Event.When <= a_To )
 			{
-				return &Interval;
+				Result.push_back( Event );
 			}
 		}
 
-		return nullptr;
-	}
-
-	void AddInterval( const Date& a_From, const Date& a_To, const DataType& a_Data )
-	{
-		Intervals.push_back( IntervalType{ a_From, a_To, a_Data } );
-	}
-
-	void AddInterval( const Date& a_When, const DataType& a_Data )
-	{
-		Intervals.push_back( IntervalType{ a_When, a_When, a_Data } );
+		return Result;
 	}
 };
 

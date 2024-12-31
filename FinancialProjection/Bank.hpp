@@ -12,6 +12,14 @@ class RentalProperty;
 class Cost;
 class Tax;
 
+struct BankLoanRelease
+{
+	double Amount = 0;
+};
+
+using BankLoanReleaseInterval = Interval< BankLoanRelease >;
+using BankLoanReleaseList = IntervalList< BankLoanRelease >;
+
 struct BankLoanAccountRecord : RecordBase
 {
 	double Current_Loan = 0;
@@ -24,6 +32,7 @@ class BankLoanAccount final : public RecordGenerator< BankLoanAccount, BankLoanA
 public:
 
 	std::shared_ptr< BankAccount > Constant_OffsetAccount;
+	BankLoanReleaseList Constant_BankLoanReleases;
 
 	double Constant_MinRepayment;
 	double Constant_InterestRate;
@@ -61,22 +70,22 @@ inline void Print( const BankAccountRecord& a_Record )
 	std::cout << "Balance: " << a_Record.Current_Balance << '\n';
 }
 
-struct BankRecord : RecordBase
-{
-	
-};
-
-class Bank : public RecordGenerator< Bank, BankRecord >
-{
-public:
-
-	BankRecord Generate( const Date& a_Date, const Date& a_Last, const Date& a_Next ) override
-	{
-		BankRecord Record;
-
-		return Record;
-	}
-};
+//struct BankRecord : RecordBase
+//{
+//	
+//};
+//
+//class Bank : public RecordGenerator< Bank, BankRecord >
+//{
+//public:
+//
+//	BankRecord Generate( const Date& a_Date, const Date& a_Last, const Date& a_Next ) override
+//	{
+//		BankRecord Record;
+//
+//		return Record;
+//	}
+//};
 
 //struct BankTransactionDescriptor
 //{

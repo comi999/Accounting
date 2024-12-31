@@ -6,24 +6,30 @@
 
 class BankLoanAccount;
 
-struct RentalCost
-{
-	std::string Name;
-	Date When;
-	float Cost;
-};
-
 struct RentalLeasePeriod
 {
-	float Income;
-	Date From, To;
+	double Rent;
 };
+
+using RentalLeasePeriodInterval = Interval< RentalLeasePeriod >;
+using RentalLeasePeriodList = IntervalList< RentalLeasePeriod >;
 
 struct RentalEquityWithdrawal
 {
-	Date When;
-	float Amount;
+	double Amount;
 };
+
+using RentalEquityWithdrawalInterval = Interval< RentalEquityWithdrawal >;
+using RentalEquityWithdrawalList = IntervalList< RentalEquityWithdrawal >;
+
+struct RentalCost
+{
+	std::string Name;
+	float Cost;
+};
+
+using RentalCostInterval = Interval < RentalCost >;
+using RentalCostList = IntervalList< RentalCost >;
 
 struct RentalPropertyRecord : RecordBase
 {
@@ -60,9 +66,9 @@ public:
 	double Constant_HouseCost;
 	double Constant_ExpectedAnnualIncrease;
 	double Constant_ManagementFee;
-	IntervalList< RentalLeasePeriod > Constant_LeasePeriods;
-	IntervalList< RentalCost > Constant_RentalCosts;
-	IntervalList< RentalEquityWithdrawal > Constant_EquityWithdrawals;
+	RentalLeasePeriodList Constant_LeasePeriods;
+	RentalCostList Constant_RentalCosts;
+	RentalEquityWithdrawalList Constant_EquityWithdrawals;
 	std::shared_ptr< BankLoanAccount > Constant_LandLoan;
 	std::shared_ptr< BankLoanAccount > Constant_HouseLoan;
 	std::map< int32_t, double > Constant_DepreciationSchedule;

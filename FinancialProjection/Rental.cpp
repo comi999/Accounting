@@ -76,17 +76,12 @@ RentalPropertyRecord RentalProperty::Generate( const Date& a_Date, const Date& a
 	// Is the house currently being leased?
 	if ( Record.Current_HouseAcquired )
 	{
-		const auto Iter = std::ranges::find_if( Constant_LeasePeriods, [ a_Date ]( const RentalLeasePeriod& a_LeasePeriod )
-		{
-			return a_Date >= a_LeasePeriod.From && a_Date <= a_LeasePeriod.To;
-		} );
-
 		// If we are within a lease period, we can set info.
-		if ( Iter != Constant_LeasePeriods.end() )
+		if ( const auto LeasePeriod = Constant_LeasePeriods.GetInterval( a_Date ) )
 		{
 			Record.Current_Leased = true;
-			Record.Current_Rent = Iter->Income;
-			Record.Current_LeasedSince = Iter->From;
+			Record.Current_Rent = LeasePeriod->Data.Rent;
+			Record.Current_LeasedSince = LeasePeriod->From;
 		}
 	}
 
@@ -106,18 +101,11 @@ RentalPropertyRecord RentalProperty::Generate( const Date& a_Date, const Date& a
 		Current_RentTotal += RentPayment;
 	}
 
+	// If we are within a lease period, we can set info.
+	if ( const auto RentalCosts = Constant_RentalCosts.GetInterval( a_Date ) )
 	{
-		const auto Iter = std::ranges::find_if( Constant_RentalCosts, [ a_Date, a_Last ]( const RentalCost& a_RentalCost )
-			{
-				return a_RentalCost.When <= a_Date && a_RentalCost.When > a_Last;
-			} );
-
-		// If we are within a lease period, we can set info.
-		if ( Iter != Constant_RentalCosts.end() )
-		{
-			Total_RentalCosts += Iter->Cost;
-			Record.Current_RentalCosts.push_back( *Iter );
-		}
+		Total_RentalCosts += RentalCosts->Data.Cost;
+		Record.Current_RentalCosts.push_back( RentalCosts->Data );
 	}
 
 	Record.Current_RentTotal = Current_RentTotal;
@@ -140,17 +128,10 @@ RentalPropertyRecord RentalProperty::Generate( const Date& a_Date, const Date& a
 
 	Record.Current_WithdrawableValue = 0.8 * Record.Current_PropertyValue;
 
+	// If we are within a lease period, we can set info.
+	if ( const auto EquityWithdrawal = Constant_EquityWithdrawals.GetInterval( Dates::IncrementDays( a_Last, 1 ), a_Date ) )
 	{
-		const auto Iter = std::ranges::find_if( Constant_EquityWithdrawals, [ a_Date, a_Last ]( const RentalEquityWithdrawal& a_EquityWithdrawal )
-			{
-				return a_EquityWithdrawal.When <= a_Date && a_EquityWithdrawal.When > a_Last;
-			} );
-
-		// If we are within a lease period, we can set info.
-		if ( Iter != Constant_EquityWithdrawals.end() )
-		{
-			Total_WithdrawnEquity += Iter->Amount;
-		}
+		Total_WithdrawnEquity += EquityWithdrawal->Data.Amount;
 	}
 
 	Record.Current_WithdrawnEquity = Total_WithdrawnEquity;

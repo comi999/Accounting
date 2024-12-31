@@ -35,7 +35,7 @@ std::shared_ptr< RentalProperty > CreateRentalProperty()
 	RentalProperty->Constant_HouseCost = 334'000;
 	RentalProperty->Constant_ExpectedAnnualIncrease = 0.1118;
 	RentalProperty->Constant_ManagementFee = 225;
-	RentalProperty->Constant_LeasePeriods = { RentalLeasePeriod{ 2'600, 20d / August / 2024, Final } };
+	RentalProperty->Constant_LeasePeriods = { RentalLeasePeriodInterval{ 20d / August / 2024, Final, 2'600 } };
 	RentalProperty->Constant_RentalCosts = {};
 	RentalProperty->Constant_EquityWithdrawals = {};
 
@@ -103,7 +103,9 @@ std::shared_ptr< BankLoanAccount > CreateBankLoanLand()
 	BankLoanAccount->Frequency = EFrequency::Monthly;
 	BankLoanAccount->Constant_InterestRate = 0.0695;
 	BankLoanAccount->Constant_MinRepayment = 803;
-	BankLoanAccount->Total_Loan = 119'000;
+
+	BankLoanAccount->Constant_BankLoanReleases.AddInterval( 22d / May / 2023, { 119'866 } );
+
 	return BankLoanAccount;
 }
 
@@ -115,7 +117,13 @@ std::shared_ptr< BankLoanAccount > CreateBankLoanHouse()
 	BankLoanAccount->Frequency = EFrequency::Monthly;
 	BankLoanAccount->Constant_InterestRate = 0.0695;
 	BankLoanAccount->Constant_MinRepayment = 2'200;
-	BankLoanAccount->Total_Loan = 334'000;
+
+	BankLoanAccount->Constant_BankLoanReleases.AddInterval( 31d / July / 2023, { 68'966 } );
+	BankLoanAccount->Constant_BankLoanReleases.AddInterval( 19d / October / 2023, { 83'682 } );
+	BankLoanAccount->Constant_BankLoanReleases.AddInterval( 15d / November / 2023, { 66'945 } );
+	BankLoanAccount->Constant_BankLoanReleases.AddInterval( 19d / January / 2024, { 66'945 } );
+	BankLoanAccount->Constant_BankLoanReleases.AddInterval( 10d / July / 2024, { 48'188 } );
+
 	return BankLoanAccount;
 }
 
@@ -156,7 +164,7 @@ std::shared_ptr< Cost > CreateCost2()
 	Cost->Start = 1d / December / 2024;
 	Cost->End = Final;
 	Cost->Frequency = EFrequency::Once;
-	Cost->Constant_NonDeductibleAmount = 115'000;
+	Cost->Constant_NonDeductibleAmount = 125'000;
 	return Cost;
 }
 
@@ -189,7 +197,7 @@ void RunScenario()
 
 	auto Record0 = ( *BankAccount )[ 31d / December / 2024 ];
 	auto Record1 = ( *RentalProperty )[ 30d / June / 2025 ];
-	auto Record2 = ( *Tax )[ 1d / August / 2025 ];
+	auto Record2 = ( *Tax )[ 1d / August / 2024 ];
 	auto Record3 = ( *BankLoanLand )[ 30d / June / 2025 ];
 	auto Record4 = ( *BankLoanHouse )[ 30d / June / 2025 ];
 
