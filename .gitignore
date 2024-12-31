@@ -1,0 +1,9 @@
+Generated/
+.vs/
+*.sln
+*.vcxitems
+*.vcxitems.filters
+*.vcxitems.user
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
